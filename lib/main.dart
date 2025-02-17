@@ -60,6 +60,9 @@ class _HomePageState extends State<HomePage> {
                     icon: Icon(Icons.favorite),
                     label: Text('Favorites'),
                   ),
+                  NavigationRailDestination(
+                      icon: Icon(Icons.verified_user_sharp),
+                      label: Text("Profile"))
                 ],
                 selectedIndex: selectIndex,
                 onDestinationSelected: (value) {
@@ -87,11 +90,11 @@ class GeneratorPage extends StatelessWidget {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
-    IconData icon;
+    IconData con;
     if (appState.lstFavorite.contains(pair)) {
-      icon = Icons.favorite;
+      con = Icons.favorite;
     } else {
-      icon = Icons.favorite_border;
+      con = Icons.favorite_border;
     }
 
     return Center(
@@ -107,15 +110,16 @@ class GeneratorPage extends StatelessWidget {
                 onPressed: () {
                   appState.getFavorite();
                 },
-                icon: Icon(icon),
+                icon: Icon(con),
                 label: Text('Like'),
               ),
               SizedBox(width: 10),
-              ElevatedButton(
+              ElevatedButton.icon(
                 onPressed: () {
                   appState.getNext();
                 },
-                child: Text('Next'),
+                icon: Icon(Icons.skip_next_sharp),
+                label: Text('Next'),
               ),
             ],
           ),
@@ -187,7 +191,12 @@ class FavoritePage extends StatelessWidget {
           child: Text('You have ' '${appState.lstFavorite.length} favorites'),
         ),
         for (var pair in appState.lstFavorite)
-          ListTile(leading: Icon(Icons.favorite), title: Text(pair.asCamelCase))
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(pair.asCamelCase),
+            subtitle: Text("This your word that you like in home page"),
+            trailing: Icon(Icons.delete),
+          )
       ],
     );
   }
